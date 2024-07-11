@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: './env' }); // Load environment variables
+dotenv.config({ path: './.env' }); // Load environment variables
 
 import express from 'express';
 import connectDB from './db/index.js'; // Import connectDB function
