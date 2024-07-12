@@ -54,7 +54,7 @@ userSchema.pre("save", async function (next) {
     // only when there is a  change in password 
     if(!this.isModified("password")) return next();
 
-    this.password=bcrypt.hash(this.password, 10)
+    this.password= await bcrypt.hash(this.password, 10)
     next()
 })
 
@@ -71,7 +71,7 @@ userSchema.method.generateAccessToken=function(){
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-        expiredIn:process.env.ACCESS_TOKEN_EXPIRY
+        expiresIn:process.env.ACCESS_TOKEN_EXPIRY
     }
 )
 }
@@ -81,7 +81,7 @@ userSchema.method.generateRefreshToken=function(){
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
-        expiredIn:process.env.REFRESH_TOKEN_EXPIRY
+        expiresIn:process.env.REFRESH_TOKEN_EXPIRY
     }
 )
 }
