@@ -13,7 +13,7 @@ const generateAccessAndRefreshTokens = async(userId)=>
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
 
-        // add refresh token in database taki baar baar pass na puchna pade user se
+        // add refresh token in database taki baar baar password na puchna pade user se
         user.refreshToken = refreshToken
         await user.save({validateBeforeSave: false})
 
@@ -177,14 +177,14 @@ const logoutUser = asyncHandler(async(req,res)=>{
 const refreshAccessToken = asyncHandler(async(req,res)=>{
     const incomingRefreshToken= req.cookies.refreshToken || req.body.refreshToken
 
-    if(incomingRefreshToken){
+    if(!incomingRefreshToken){
         throw new ApiError(401,"Unauthorized request")
     }
 
     try {
-        const decodedToekn = jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
+        const decodedToken = jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
     
-        const user = await User.findById(decodedToekn._id)
+        const user = await User.findById(decodedToken._id)
         if(!user){
             throw new ApiError(401,"Invalid refresh Token")
         }
